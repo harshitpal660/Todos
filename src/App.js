@@ -4,9 +4,16 @@ import Todos from "./Components/todos";
 import animationData from "./Animation/Animation.json";
 import lottie from "lottie-web";
 import { useEffect } from "react";
+import refresh from "./Images/refresh.png";
+import { emptyTodo } from "./Reducers/todo/todoSlice";
+import { useDispatch } from "react-redux";
 
 // App component
 function App() {
+
+  // Redux dispatch function
+  const dispatch = useDispatch();
+
   // Setting up bird animations
   useEffect(() => {
     // Loading the Lottie animation when the component mounts
@@ -22,12 +29,15 @@ function App() {
     return () => anim.destroy();
   }, []);
 
+  const todoEmpty = ()=>{
+    dispatch(emptyTodo())
+  }
   // Rendering the main App component
   return (
     <div className="App absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 sm:w-2/3 lg:w-1/2">
       {/* Title */}
       <h1 className="text-2xl font-bold my-2.5 text-center">Todo List</h1>
-
+      <div className="refresh" onClick={todoEmpty}><img src={refresh}></img></div>
       {/* AddTodo component for adding new todos */}
       <AddTodo />
 
